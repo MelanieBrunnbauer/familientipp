@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class HomeController {
     @RequestMapping("/")
     public String index() {
-        return "Hier entsteht unsere Tipp-App für die WM 2018!";
+        return "Hier entsteht unsere neue Tipp-App für die WM 2018!";
     }
 
 }
