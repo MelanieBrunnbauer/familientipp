@@ -1,10 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Siegertipp</title>
 </head>
 <body>
-Siegertipp
+    <table>
+        <tr th:each="appUser : ${appUsers}">
+            <td th:text="${appUser.firstName}"></td>
+        </tr>
+    </table>
 </body>
 </html>
