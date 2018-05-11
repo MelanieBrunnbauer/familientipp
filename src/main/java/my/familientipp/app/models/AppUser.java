@@ -1,7 +1,10 @@
 package my.familientipp.app.models;
 
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -16,6 +19,14 @@ public class AppUser {
 
     @NotNull
     private String lastName;
+
+    public AppUser(@NotNull String firstName, @NotNull String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public AppUser() {
+    }
 
     public Long getId() {
         return id;
