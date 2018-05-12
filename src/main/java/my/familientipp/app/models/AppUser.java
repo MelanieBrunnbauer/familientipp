@@ -1,10 +1,6 @@
 package my.familientipp.app.models;
 
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -19,6 +15,9 @@ public class AppUser {
 
     @NotNull
     private String lastName;
+
+    @ManyToOne()
+    private SoccerTeam winnertip;
 
     public AppUser(@NotNull String firstName, @NotNull String lastName) {
         this.firstName = firstName;
@@ -51,4 +50,5 @@ public class AppUser {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
 }
