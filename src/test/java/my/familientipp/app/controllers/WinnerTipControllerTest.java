@@ -1,7 +1,7 @@
 package my.familientipp.app.controllers;
 
-import my.familientipp.app.models.AppUser;
-import my.familientipp.app.services.AppUserService;
+import my.familientipp.app.DTO.WinnerTipDTO;
+import my.familientipp.app.services.WinnerTipService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,29 +35,28 @@ public class WinnerTipControllerTest {
 
     private static final String URL_TEMPLATE = "/siegertipp";
     private static final String VIEW_NAME = "winnertip";
-    private static final String APP_USERS = "appUsers";
-    private static final String FIRST_NAME = "firstName";
-    private static final String LAST_NAME = "lastName";
+    private static final String WINNER_TIPS_ATTRIBUTE = "winnertips";
+    private static final String FIRST_NAME = "firstNameOfAppUser";
+    private static final String FIFA_CODE = "fifaCodeOfSoccerTeam";
 
     @Mock
-    private AppUserService appUserService;
+    private WinnerTipService winnerTipService;
 
     @InjectMocks
     private WinnerTipController winnerTipController;
 
     private MockMvc mockMvc;
-    private List<AppUser> appUsers;
+    private List<WinnerTipDTO> winnerTips;
 
 
     @Before
     public void setUp() {
-        winnerTipController = new WinnerTipController(appUserService);
+        winnerTipController = new WinnerTipController(winnerTipService);
         mockMvc = MockMvcBuilders.standaloneSetup(winnerTipController).build();
 
-        appUsers = setupAppUsers();
-        when(appUserService.findAll()).thenReturn(appUsers);
+        winnerTips = setupWinnertips();
+        when(winnerTipService.getAllWinnertips()).thenReturn(winnerTips);
     }
-
 
     @Test
     public void requestIsSuccessfulAndCorrectViewIsReturned() throws Exception {
@@ -67,41 +66,34 @@ public class WinnerTipControllerTest {
     }
 
     @Test
-    public void responseContainsAllAppUsers() throws Exception {
-        verifyAppUserAttributeExists()
-                .andExpect(model().attribute(APP_USERS, containsInAnyOrder(appUsers.toArray())))
-                .andExpect(model().attribute(APP_USERS, hasItem(
+    public void responseContainsAllWinnerTips() throws Exception {
+        verifyWinnertipsAttributeExists()
+                .andExpect(model().attribute(WINNER_TIPS_ATTRIBUTE, containsInAnyOrder(winnerTips.toArray())))
+                .andExpect(model().attribute(WINNER_TIPS_ATTRIBUTE, hasItem(
                             allOf(
                                     hasProperty(FIRST_NAME, is(USER_FIRST_NAME_1)),
-                                    hasProperty(LAST_NAME, is(USER_LAST_NAME_1))
+                                    hasProperty(FIFA_CODE, is(FIFA_CODE_TEAM_1))
                             ))))
-                .andExpect(model().attribute(APP_USERS, hasItem(
+                .andExpect(model().attribute(WINNER_TIPS_ATTRIBUTE, hasItem(
                             allOf(
                                     hasProperty(FIRST_NAME, is(USER_FIRST_NAME_2)),
-                                    hasProperty(LAST_NAME, is(USER_LAST_NAME_2))
+                                    hasProperty(FIFA_CODE, is(FIFA_CODE_TEAM_2))
                             ))));
 
-        verify(appUserService,times(1)).findAll();
+        verify(winnerTipService,times(1)).getAllWinnertips();
     }
 
 
-
-    private ResultActions verifyAppUserAttributeExists() throws Exception {
+    private ResultActions verifyWinnertipsAttributeExists() throws Exception {
         return mockMvc.perform(get(URL_TEMPLATE))
-                .andExpect(model().attributeExists(APP_USERS));
+                .andExpect(model().attributeExists(WINNER_TIPS_ATTRIBUTE));
     }
 
-    public static List<AppUser> setupAppUsers() {
-        AppUser appUser1 = new AppUserBuilder()
-                .withFirstName(USER_FIRST_NAME_1)
-                .withLastName(USER_LAST_NAME_1)
-                .build();
 
-        AppUser appUser2 = new AppUserBuilder()
-                .withFirstName(USER_FIRST_NAME_2)
-                .withLastName(USER_LAST_NAME_2)
-                .build();
+    private List<WinnerTipDTO> setupWinnertips() {
+        WinnerTipDTO firstWinnertip = new WinnerTipDTO(USER_FIRST_NAME_1,FIFA_CODE_TEAM_1);
+        WinnerTipDTO secondWinnertip = new WinnerTipDTO(USER_FIRST_NAME_2,FIFA_CODE_TEAM_2);
 
-        return Arrays.asList(appUser1, appUser2);
+        return Arrays.asList(firstWinnertip, secondWinnertip);
     }
 }

@@ -51,16 +51,16 @@ public class WinnerTipServiceTest {
 
         List<WinnerTipDTO> winnerTips = winnerTipService.getAllWinnertips();
 
-        assertThat(winnerTips.get(0).fifaCodeOfsoccerTeam,is(FIFA_CODE_TEAM_1));
-        assertThat(winnerTips.get(1).fifaCodeOfsoccerTeam,is(FIFA_CODE_TEAM_2));
+        assertThat(winnerTips.get(0).getFifaCodeOfSoccerTeam(),is(FIFA_CODE_TEAM_1));
+        assertThat(winnerTips.get(1).getFifaCodeOfSoccerTeam(),is(FIFA_CODE_TEAM_2));
     }
 
     @Test
     public void correctNamesInResult() {
         List<WinnerTipDTO> winnerTips = winnerTipService.getAllWinnertips();
 
-        assertThat(winnerTips.get(0).firstNameOfAppUser,is(USER_FIRST_NAME_1));
-        assertThat(winnerTips.get(1).firstNameOfAppUser,is(USER_FIRST_NAME_2));
+        assertThat(winnerTips.get(0).getFirstNameOfAppUser(),is(USER_FIRST_NAME_1));
+        assertThat(winnerTips.get(1).getFirstNameOfAppUser(),is(USER_FIRST_NAME_2));
 
     }
 
@@ -70,7 +70,7 @@ public class WinnerTipServiceTest {
         when(userService.findAll()).thenReturn(appUsers);
 
         List<WinnerTipDTO> winnerTips = winnerTipService.getAllWinnertips();
-        assertThat(winnerTips.get(1).fifaCodeOfsoccerTeam,is("leer"));
+        assertThat(winnerTips.get(1).getFifaCodeOfSoccerTeam(),is("leer"));
     }
 
     //TODO: returnsIndividualUserWithWinnertip?

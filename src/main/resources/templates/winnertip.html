@@ -1,14 +1,29 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/html">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css"
+          href="webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
+
     <title>Siegertipp</title>
 </head>
 <body>
-    <table>
-        <tr th:each="appUser : ${appUsers}">
-            <td th:text="${appUser.firstName}"></td>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Spieler</th>
+        <th scope="col">Siegertipp</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr th:each="winnertip : ${winnertips}">
+            <td th:text="${winnertip.firstNameOfAppUser}"></td>
+            <td th:text="${winnertip.fifaCodeOfSoccerTeam}"></td>
         </tr>
-    </table>
+    </tbody>
+
+ </table>
 </body>
 </html>

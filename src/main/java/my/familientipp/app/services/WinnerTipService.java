@@ -4,10 +4,12 @@ import my.familientipp.app.DTO.WinnerTipDTO;
 import my.familientipp.app.models.AppUser;
 import my.familientipp.app.models.SoccerTeam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class WinnerTipService {
 
     @Autowired

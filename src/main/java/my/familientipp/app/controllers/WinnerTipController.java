@@ -1,7 +1,7 @@
 package my.familientipp.app.controllers;
 
-import my.familientipp.app.models.AppUser;
-import my.familientipp.app.services.AppUserService;
+import my.familientipp.app.DTO.WinnerTipDTO;
+import my.familientipp.app.services.WinnerTipService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,17 +13,17 @@ import java.util.List;
 public class WinnerTipController {
 
     @Autowired
-    private AppUserService appUserService;
+    private WinnerTipService winnertipService;
 
-    WinnerTipController(AppUserService appUserService) {
-        this.appUserService = appUserService;
+    WinnerTipController(WinnerTipService winnertipService) {
+        this.winnertipService = winnertipService;
     }
 
     @RequestMapping("/siegertipp")
     public String winnertip(Model model){
 
-        List<AppUser> allAppUsers = appUserService.findAll();
-        model.addAttribute("appUsers", allAppUsers);
+        List<WinnerTipDTO> allWinnertips = winnertipService.getAllWinnertips();
+        model.addAttribute("winnertips", allWinnertips);
         return "winnertip";
     }
 

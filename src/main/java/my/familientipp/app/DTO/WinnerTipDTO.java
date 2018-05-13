@@ -2,11 +2,19 @@ package my.familientipp.app.DTO;
 
 public class WinnerTipDTO {
 
-    public String firstNameOfAppUser;
-    public String fifaCodeOfsoccerTeam;
+    private String firstNameOfAppUser;
+    private String fifaCodeOfSoccerTeam;
 
-    public WinnerTipDTO(String firstNameOfAppUser, String fifaCodeOfsoccerTeam) {
+    public WinnerTipDTO(String firstNameOfAppUser, String fifaCodeOfSoccerTeam) {
         this.firstNameOfAppUser = firstNameOfAppUser;
-        this.fifaCodeOfsoccerTeam = fifaCodeOfsoccerTeam;
+        this.fifaCodeOfSoccerTeam = fifaCodeOfSoccerTeam;
+    }
+
+    public String getFirstNameOfAppUser() {
+        return firstNameOfAppUser;
+    }
+
+    public String getFifaCodeOfSoccerTeam() {
+        return fifaCodeOfSoccerTeam;
     }
 }
