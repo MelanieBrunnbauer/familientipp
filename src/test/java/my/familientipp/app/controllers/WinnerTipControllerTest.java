@@ -2,7 +2,6 @@ package my.familientipp.app.controllers;
 
 import my.familientipp.app.models.AppUser;
 import my.familientipp.app.services.AppUserService;
-import my.familientipp.app.setup.TestUtil;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,8 +14,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.Arrays;
 import java.util.List;
 
+import static my.familientipp.app.setup.TestConstants.*;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.containsInAnyOrder;
@@ -53,7 +54,7 @@ public class WinnerTipControllerTest {
         winnerTipController = new WinnerTipController(appUserService);
         mockMvc = MockMvcBuilders.standaloneSetup(winnerTipController).build();
 
-        appUsers = TestUtil.setupAppUsers();
+        appUsers = setupAppUsers();
         when(appUserService.findAll()).thenReturn(appUsers);
     }
 
@@ -71,13 +72,13 @@ public class WinnerTipControllerTest {
                 .andExpect(model().attribute(APP_USERS, containsInAnyOrder(appUsers.toArray())))
                 .andExpect(model().attribute(APP_USERS, hasItem(
                             allOf(
-                                    hasProperty(FIRST_NAME, is(TestUtil.MAX)),
-                                    hasProperty(LAST_NAME, is(TestUtil.MUSTERMANN))
+                                    hasProperty(FIRST_NAME, is(USER_FIRST_NAME_1)),
+                                    hasProperty(LAST_NAME, is(USER_LAST_NAME_1))
                             ))))
                 .andExpect(model().attribute(APP_USERS, hasItem(
                             allOf(
-                                    hasProperty(FIRST_NAME, is(TestUtil.ANNA)),
-                                    hasProperty(LAST_NAME, is(TestUtil.MUSTERFRAU))
+                                    hasProperty(FIRST_NAME, is(USER_FIRST_NAME_2)),
+                                    hasProperty(LAST_NAME, is(USER_LAST_NAME_2))
                             ))));
 
         verify(appUserService,times(1)).findAll();
@@ -88,5 +89,19 @@ public class WinnerTipControllerTest {
     private ResultActions verifyAppUserAttributeExists() throws Exception {
         return mockMvc.perform(get(URL_TEMPLATE))
                 .andExpect(model().attributeExists(APP_USERS));
+    }
+
+    public static List<AppUser> setupAppUsers() {
+        AppUser appUser1 = new AppUserBuilder()
+                .withFirstName(USER_FIRST_NAME_1)
+                .withLastName(USER_LAST_NAME_1)
+                .build();
+
+        AppUser appUser2 = new AppUserBuilder()
+                .withFirstName(USER_FIRST_NAME_2)
+                .withLastName(USER_LAST_NAME_2)
+                .build();
+
+        return Arrays.asList(appUser1, appUser2);
     }
 }
