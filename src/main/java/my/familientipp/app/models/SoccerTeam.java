@@ -19,4 +19,28 @@ public class SoccerTeam {
     @NotNull
     private String country;
 
+
+    public SoccerTeam(@NotNull String fifaCode, @NotNull String country) {
+        this.fifaCode = fifaCode;
+        this.country = country;
+    }
+
+    public SoccerTeam() {
+    }
+
+    public String getFifaCode() {
+        return fifaCode;
+    }
+
+    public void setFifaCode(String fifaCode) {
+        this.fifaCode = fifaCode;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
 }

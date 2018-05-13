@@ -2,6 +2,7 @@ package my.familientipp.app.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Optional;
 
 @Entity
 public class AppUser {
@@ -27,12 +28,14 @@ public class AppUser {
     public AppUser() {
     }
 
-    public Long getId() {
-        return id;
+    public AppUser(@NotNull String firstName, @NotNull String lastName, SoccerTeam winnertip) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.winnertip = winnertip;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Long getId() {
+        return id;
     }
 
     public String getFirstName() {
@@ -49,6 +52,14 @@ public class AppUser {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public Optional<SoccerTeam> getWinnertip() {
+        return Optional.ofNullable(winnertip);
+    }
+
+    public void setWinnertip(SoccerTeam winnertip) {
+        this.winnertip = winnertip;
     }
 
 }
