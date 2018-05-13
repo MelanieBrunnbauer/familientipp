@@ -2,6 +2,7 @@ package my.familientipp.app.controllers;
 
 import my.familientipp.app.models.AppUser;
 import my.familientipp.app.services.AppUserService;
+import my.familientipp.app.setup.TestUtil;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,7 +15,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.allOf;
@@ -34,13 +34,9 @@ public class WinnerTipControllerTest {
 
     private static final String URL_TEMPLATE = "/siegertipp";
     private static final String VIEW_NAME = "winnertip";
-    private static final String APP_USERS_ATTRIBUTE = "appUsers";
-    private static final String ATTRIBUTE_FIRST_NAME = "firstName";
-    private static final String ATTRIBUTE_LAST_NAME = "lastName";
-    private static final String MUSTERMANN = "Mustermann";
-    private static final String MAX = "Max";
-    private static final String ANNA = "Anna";
-    private static final String MUSTERFRAU = "Musterfrau";
+    private static final String APP_USERS = "appUsers";
+    private static final String FIRST_NAME = "firstName";
+    private static final String LAST_NAME = "lastName";
 
     @Mock
     private AppUserService appUserService;
@@ -57,7 +53,7 @@ public class WinnerTipControllerTest {
         winnerTipController = new WinnerTipController(appUserService);
         mockMvc = MockMvcBuilders.standaloneSetup(winnerTipController).build();
 
-        appUsers = setupAppUsers();
+        appUsers = TestUtil.setupAppUsers();
         when(appUserService.findAll()).thenReturn(appUsers);
     }
 
@@ -72,37 +68,25 @@ public class WinnerTipControllerTest {
     @Test
     public void responseContainsAllAppUsers() throws Exception {
         verifyAppUserAttributeExists()
-                .andExpect(model().attribute(APP_USERS_ATTRIBUTE, containsInAnyOrder(appUsers.toArray())))
-                .andExpect(model().attribute(APP_USERS_ATTRIBUTE, hasItem(
+                .andExpect(model().attribute(APP_USERS, containsInAnyOrder(appUsers.toArray())))
+                .andExpect(model().attribute(APP_USERS, hasItem(
                             allOf(
-                                    hasProperty(ATTRIBUTE_FIRST_NAME, is(MAX)),
-                                    hasProperty(ATTRIBUTE_LAST_NAME, is(MUSTERMANN))
+                                    hasProperty(FIRST_NAME, is(TestUtil.MAX)),
+                                    hasProperty(LAST_NAME, is(TestUtil.MUSTERMANN))
                             ))))
-                .andExpect(model().attribute(APP_USERS_ATTRIBUTE, hasItem(
+                .andExpect(model().attribute(APP_USERS, hasItem(
                             allOf(
-                                    hasProperty(ATTRIBUTE_FIRST_NAME, is(ANNA)),
-                                    hasProperty(ATTRIBUTE_LAST_NAME, is(MUSTERFRAU))
+                                    hasProperty(FIRST_NAME, is(TestUtil.ANNA)),
+                                    hasProperty(LAST_NAME, is(TestUtil.MUSTERFRAU))
                             ))));
 
         verify(appUserService,times(1)).findAll();
     }
 
-    private List<AppUser> setupAppUsers() {
-        AppUser appUser1 = new AppUserBuilder()
-                                .withFirstName(MAX)
-                                .withLastName(MUSTERMANN)
-                                .build();
 
-        AppUser appUser2 = new AppUserBuilder()
-                                .withFirstName(ANNA)
-                                .withLastName(MUSTERFRAU)
-                                .build();
-
-        return Arrays.asList(appUser1, appUser2);
-    }
 
     private ResultActions verifyAppUserAttributeExists() throws Exception {
         return mockMvc.perform(get(URL_TEMPLATE))
-                .andExpect(model().attributeExists(APP_USERS_ATTRIBUTE));
+                .andExpect(model().attributeExists(APP_USERS));
     }
 }
