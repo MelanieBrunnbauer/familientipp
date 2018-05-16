@@ -30,7 +30,7 @@ public class SoccerTeamServiceTest {
 
 
     @Before
-    public void setUp() {
+    public void setUp(){
         service = new SoccerTeamService(repository);
 
         soccerTeams = setupSoccerTeams();
@@ -40,7 +40,7 @@ public class SoccerTeamServiceTest {
     @Test
     public void returnsAllSoccerTeams() {
         when(repository.findAll()).thenReturn(soccerTeams);
-        List<SoccerTeam> result = service.findAllSoccerTeams();
+        List<SoccerTeam> result = service.findAll();
         assertThat(result, containsInAnyOrder(soccerTeams.toArray()));
     }
 

@@ -1,5 +1,6 @@
 package my.familientipp.app.controllers;
 
+import my.familientipp.app.DTO.SoccerTeamDTO;
 import my.familientipp.app.DTO.WinnerTipDTO;
 import my.familientipp.app.services.WinnerTipService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,9 @@ public class WinnerTipController {
     public String winnertip(Model model){
 
         List<WinnerTipDTO> allWinnertips = winnertipService.getAllWinnertips();
+        List<SoccerTeamDTO> allSoccerTeams = winnertipService.getAllSoccerTeams();
         model.addAttribute("winnertips", allWinnertips);
+        model.addAttribute("soccerTeams",allSoccerTeams);
         return "winnertip";
     }
 

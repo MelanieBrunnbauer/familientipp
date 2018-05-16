@@ -1,7 +1,7 @@
 insert into soccer_team (fifa_code, country) values
-('RUS','Russia'),
-('KSA', 'Saudi Arabia'),
-('EGY', 'Egypt');
+('RUS','Russland'),
+('KSA', 'Saudi Arabien'),
+('EGY', 'Ägypten');
 
 Insert into app_user (first_name, last_name, winnertip_id) values
 ('Michael', 'Brunnbauer', 1),

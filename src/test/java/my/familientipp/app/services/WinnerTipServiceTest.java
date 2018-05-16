@@ -1,5 +1,6 @@
 package my.familientipp.app.services;
 
+import my.familientipp.app.DTO.SoccerTeamDTO;
 import my.familientipp.app.DTO.WinnerTipDTO;
 import my.familientipp.app.controllers.AppUserBuilder;
 import my.familientipp.app.models.AppUser;
@@ -26,41 +27,40 @@ public class WinnerTipServiceTest {
     @Mock
     private AppUserService userService;
 
+    @Mock
+    private SoccerTeamService soccerTeamService;
+
     @InjectMocks
     private WinnerTipService winnerTipService;
 
     private List<AppUser> appUsers;
+    private List<SoccerTeam> allSoccerTeams;
 
     @Before
     public void setUp() {
-        winnerTipService = new WinnerTipService(userService);
+        winnerTipService = new WinnerTipService(userService, soccerTeamService);
+
         appUsers = setupAppUsersWithWinnertips();
         when(userService.findAll()).thenReturn(appUsers);
+
+        allSoccerTeams = setupSoccerTeams();
+        when(soccerTeamService.findAll()).thenReturn(allSoccerTeams);
     }
 
     @Test
-    public void correctNumberOfResults() {
+    public void correctDatainWinnertipDTOs() {
 
         List<WinnerTipDTO> winnerTips = winnerTipService.getAllWinnertips();
 
-        assertThat(winnerTips, hasSize(2));
-    }
+        assertThat(winnerTips, hasSize(appUsers.size()));
 
-    @Test
-    public void correctTeamsInResult() {
+        WinnerTipDTO first = winnerTips.get(0);
+        assertThat(first.getFifaCodeOfSoccerTeam(),is(FIFA_CODE_TEAM_1));
+        assertThat(first.getFirstNameOfAppUser(),is(USER_FIRST_NAME_1));
 
-        List<WinnerTipDTO> winnerTips = winnerTipService.getAllWinnertips();
-
-        assertThat(winnerTips.get(0).getFifaCodeOfSoccerTeam(),is(FIFA_CODE_TEAM_1));
-        assertThat(winnerTips.get(1).getFifaCodeOfSoccerTeam(),is(FIFA_CODE_TEAM_2));
-    }
-
-    @Test
-    public void correctNamesInResult() {
-        List<WinnerTipDTO> winnerTips = winnerTipService.getAllWinnertips();
-
-        assertThat(winnerTips.get(0).getFirstNameOfAppUser(),is(USER_FIRST_NAME_1));
-        assertThat(winnerTips.get(1).getFirstNameOfAppUser(),is(USER_FIRST_NAME_2));
+        WinnerTipDTO second = winnerTips.get(1);
+        assertThat(second.getFifaCodeOfSoccerTeam(),is(FIFA_CODE_TEAM_2));
+        assertThat(second.getFirstNameOfAppUser(),is(USER_FIRST_NAME_2));
 
     }
 
@@ -73,8 +73,27 @@ public class WinnerTipServiceTest {
         assertThat(winnerTips.get(1).getFifaCodeOfSoccerTeam(),is("leer"));
     }
 
-    //TODO: returnsIndividualUserWithWinnertip?
+    @Test
+    public void correctDataInSoccerTeamDTOs() {
+        List<SoccerTeamDTO> result = winnerTipService.getAllSoccerTeams();
 
+        assertThat(result,hasSize(allSoccerTeams.size()));
+
+        SoccerTeamDTO first = result.get(0);
+        assertThat(first.getFifaCode(),is(FIFA_CODE_TEAM_1));
+        assertThat(first.getCountry(),is(COUNTRY_TEAM_1));
+
+        SoccerTeamDTO second = result.get(1);
+        assertThat(second.getFifaCode(),is(FIFA_CODE_TEAM_2));
+        assertThat(second.getCountry(),is(COUNTRY_TEAM_2));
+    }
+
+
+    private List<SoccerTeam> setupSoccerTeams() {
+        SoccerTeam soccerTeam1 = new SoccerTeam(FIFA_CODE_TEAM_1, COUNTRY_TEAM_1);
+        SoccerTeam soccerTeam2 = new SoccerTeam(FIFA_CODE_TEAM_2, COUNTRY_TEAM_2);
+        return Arrays.asList(soccerTeam1, soccerTeam2);
+    }
 
     private List<AppUser> setupAppUsersWithWinnertips() {
         AppUser appUser1 = new AppUserBuilder()

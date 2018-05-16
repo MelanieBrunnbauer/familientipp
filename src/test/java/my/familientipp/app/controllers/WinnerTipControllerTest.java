@@ -1,5 +1,6 @@
 package my.familientipp.app.controllers;
 
+import my.familientipp.app.DTO.SoccerTeamDTO;
 import my.familientipp.app.DTO.WinnerTipDTO;
 import my.familientipp.app.services.WinnerTipService;
 import org.junit.Before;
@@ -36,17 +37,20 @@ public class WinnerTipControllerTest {
     private static final String URL_TEMPLATE = "/siegertipp";
     private static final String VIEW_NAME = "winnertip";
     private static final String WINNER_TIPS_ATTRIBUTE = "winnertips";
+    private static final String SOCCER_TEAM_ATTRIBUTE = "soccerTeams";
     private static final String FIRST_NAME = "firstNameOfAppUser";
     private static final String FIFA_CODE = "fifaCodeOfSoccerTeam";
 
     @Mock
     private WinnerTipService winnerTipService;
 
+
     @InjectMocks
     private WinnerTipController winnerTipController;
 
     private MockMvc mockMvc;
     private List<WinnerTipDTO> winnerTips;
+    private List<SoccerTeamDTO> soccerTeams;
 
 
     @Before
@@ -55,8 +59,11 @@ public class WinnerTipControllerTest {
         mockMvc = MockMvcBuilders.standaloneSetup(winnerTipController).build();
 
         winnerTips = setupWinnertips();
+        soccerTeams = setupSoccerTeams();
         when(winnerTipService.getAllWinnertips()).thenReturn(winnerTips);
+        when(winnerTipService.getAllSoccerTeams()).thenReturn(soccerTeams);
     }
+
 
     @Test
     public void requestIsSuccessfulAndCorrectViewIsReturned() throws Exception {
@@ -67,7 +74,7 @@ public class WinnerTipControllerTest {
 
     @Test
     public void responseContainsAllWinnerTips() throws Exception {
-        verifyWinnertipsAttributeExists()
+        verifyAttribute(WINNER_TIPS_ATTRIBUTE)
                 .andExpect(model().attribute(WINNER_TIPS_ATTRIBUTE, containsInAnyOrder(winnerTips.toArray())))
                 .andExpect(model().attribute(WINNER_TIPS_ATTRIBUTE, hasItem(
                             allOf(
@@ -83,10 +90,17 @@ public class WinnerTipControllerTest {
         verify(winnerTipService,times(1)).getAllWinnertips();
     }
 
+    @Test
+    public void responseContainsAllSoccerTeams() throws Exception {
+        verifyAttribute(SOCCER_TEAM_ATTRIBUTE)
+                .andExpect(model().attribute(SOCCER_TEAM_ATTRIBUTE,containsInAnyOrder(soccerTeams.toArray())));
 
-    private ResultActions verifyWinnertipsAttributeExists() throws Exception {
+        verify(winnerTipService,times(1)).getAllSoccerTeams();
+    }
+
+    private ResultActions verifyAttribute(String winnerTips) throws Exception {
         return mockMvc.perform(get(URL_TEMPLATE))
-                .andExpect(model().attributeExists(WINNER_TIPS_ATTRIBUTE));
+                .andExpect(model().attributeExists(winnerTips));
     }
 
 
@@ -96,4 +110,12 @@ public class WinnerTipControllerTest {
 
         return Arrays.asList(firstWinnertip, secondWinnertip);
     }
+
+    private List<SoccerTeamDTO> setupSoccerTeams() {
+        SoccerTeamDTO soccerTeam1 = new SoccerTeamDTO(FIFA_CODE_TEAM_1, COUNTRY_TEAM_1);
+        SoccerTeamDTO soccerTeam2 = new SoccerTeamDTO(FIFA_CODE_TEAM_2, COUNTRY_TEAM_2);
+
+        return Arrays.asList(soccerTeam1, soccerTeam2);
+    }
+
 }

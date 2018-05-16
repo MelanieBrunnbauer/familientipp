@@ -17,7 +17,7 @@ class SoccerTeamService {
         this.repository = repository;
     }
 
-    List<SoccerTeam> findAllSoccerTeams() {
+    List<SoccerTeam> findAll() {
         return repository.findAll();
     }
 }
