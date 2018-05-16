@@ -20,11 +20,15 @@
     <tbody>
         <tr th:each="winnertip : ${winnertips}">
             <td th:text="${winnertip.firstNameOfAppUser}"></td>
+
             <td>
                 <select class="form-control">
                     <option
                             th:each="soccerTeam : ${soccerTeams}"
-                            th:text="${soccerTeam}"></option>
+                            th:text="${soccerTeam}"
+                            th:selected="${soccerTeam.fifaCode==winnertip.fifaCodeOfSoccerTeam}">
+                    </option>
+
                 </select>
             </td>
         </tr>
