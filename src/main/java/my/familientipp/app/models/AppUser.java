@@ -20,11 +20,6 @@ public class AppUser {
     @ManyToOne()
     private SoccerTeam winnertip;
 
-    public AppUser(@NotNull String firstName, @NotNull String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
-
     public AppUser() {
     }
 

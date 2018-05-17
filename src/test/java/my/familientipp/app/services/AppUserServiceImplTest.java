@@ -17,18 +17,18 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class AppUserServiceTest {
+public class AppUserServiceImplTest {
 
 
     @Mock
     private AppUserRepository appUserRepository;
 
     @InjectMocks
-    private AppUserService appUserService;
+    private AppUserServiceImpl appUserService;
 
     @Before
     public void setUp() {
-        appUserService = new AppUserService(appUserRepository);
+        appUserService = new AppUserServiceImpl(appUserRepository);
     }
 
     @Test
