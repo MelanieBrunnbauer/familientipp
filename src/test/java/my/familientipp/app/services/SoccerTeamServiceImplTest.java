@@ -18,20 +18,20 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class SoccerTeamServiceTest {
+public class SoccerTeamServiceImplTest {
 
     @Mock
     private SoccerTeamRepository repository;
 
     @InjectMocks
-    private SoccerTeamService service;
+    private SoccerTeamServiceImpl service;
 
     private List<SoccerTeam> soccerTeams;
 
 
     @Before
     public void setUp(){
-        service = new SoccerTeamService(repository);
+        service = new SoccerTeamServiceImpl(repository);
 
         soccerTeams = setupSoccerTeams();
     }
