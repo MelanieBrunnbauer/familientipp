@@ -22,7 +22,7 @@ import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class WinnerTipServiceTest {
+public class WinnerTipServiceImplTest {
 
     @Mock
     private AppUserService userService;
@@ -31,14 +31,14 @@ public class WinnerTipServiceTest {
     private SoccerTeamService soccerTeamService;
 
     @InjectMocks
-    private WinnerTipService winnerTipService;
+    private WinnerTipServiceImpl winnerTipService;
 
     private List<AppUser> appUsers;
     private List<SoccerTeam> allSoccerTeams;
 
     @Before
     public void setUp() {
-        winnerTipService = new WinnerTipService(userService, soccerTeamService);
+        winnerTipService = new WinnerTipServiceImpl(userService, soccerTeamService);
 
         appUsers = setupAppUsersWithWinnertips();
         when(userService.findAll()).thenReturn(appUsers);
