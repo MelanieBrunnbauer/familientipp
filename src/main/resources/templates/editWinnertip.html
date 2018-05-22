@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css"
+          href="webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
+
+    <title>Siegertipp Ändern</title>
+</head>
+<body>
+<h1 th:text="${appUser}"></h1>
+<form action="#" th:action="@{|/siegertipp/edit/${appUser}|}" th:object="${winnertip}" method="post">
+    <input type="hidden" th:field="*{firstNameOfAppUser}" th:value="${appUser}"/>
+
+    <select th:field="*{fifaCodeOfSoccerTeam}" class="form-control">
+        <option
+                th:each="soccerTeam : ${soccerTeams}"
+                th:text="${soccerTeam}"
+                th:value="${soccerTeam}">
+        </option>
+    </select>
+    <input type="submit" value="Speichern"/>
+</form>
+</body>
+</html>

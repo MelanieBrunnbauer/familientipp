@@ -20,21 +20,16 @@
     <tbody>
         <tr th:each="winnertip : ${winnertips}">
             <td th:text="${winnertip.firstNameOfAppUser}"></td>
-
+            <td th:text="${winnertip.fifaCodeOfSoccerTeam}"></td>
             <td>
-                <select class="form-control">
-                    <option
-                            th:each="soccerTeam : ${soccerTeams}"
-                            th:text="${soccerTeam}"
-                            th:selected="${soccerTeam.fifaCode==winnertip.fifaCodeOfSoccerTeam}">
-                    </option>
-
-                </select>
+                <form method="get" th:action="@{|/siegertipp/edit/${winnertip.firstNameOfAppUser}|}">
+                    <button class="btn btn-default">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </button>
+                </form>
             </td>
         </tr>
     </tbody>
-
-
- </table>
+</table>
 </body>
 </html>

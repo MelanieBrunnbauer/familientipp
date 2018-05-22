@@ -10,11 +10,26 @@ public class WinnerTipDTO {
         this.fifaCodeOfSoccerTeam = fifaCodeOfSoccerTeam;
     }
 
+    public WinnerTipDTO() {
+    }
+
+    public WinnerTipDTO(String firstNameOfAppUser) {
+        this.firstNameOfAppUser = firstNameOfAppUser;
+    }
+
     public String getFirstNameOfAppUser() {
         return firstNameOfAppUser;
     }
 
     public String getFifaCodeOfSoccerTeam() {
         return fifaCodeOfSoccerTeam;
+    }
+
+    public void setFirstNameOfAppUser(String firstNameOfAppUser) {
+        this.firstNameOfAppUser = firstNameOfAppUser;
+    }
+
+    public void setFifaCodeOfSoccerTeam(String fifaCodeOfSoccerTeam) {
+        this.fifaCodeOfSoccerTeam = fifaCodeOfSoccerTeam;
     }
 }

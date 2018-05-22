@@ -12,7 +12,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Arrays;
@@ -26,6 +25,7 @@ import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.core.IsCollectionContaining.hasItem;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
@@ -35,9 +35,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class WinnerTipControllerTest {
 
     private static final String URL_TEMPLATE = "/siegertipp";
+    private static final String URL_TEMPLATE_EDIT = URL_TEMPLATE + "/edit/" + USER_FIRST_NAME_1;
     private static final String VIEW_NAME = "winnertip";
+    private static final String EDIT_VIEW_NAME = "editWinnertip";
     private static final String WINNER_TIPS_ATTRIBUTE = "winnertips";
-    private static final String SOCCER_TEAM_ATTRIBUTE = "soccerTeams";
+    private static final String APP_USER_ATTRIBUTE = "appUser";
+    private static final String SOCCER_TEAMS_ATTRIBUTE = "soccerTeams";
+    private static final String WINNER_TIP_ATTRIBUTE = "winnertip";
     private static final String FIRST_NAME = "firstNameOfAppUser";
     private static final String FIFA_CODE = "fifaCodeOfSoccerTeam";
 
@@ -66,7 +70,7 @@ public class WinnerTipControllerTest {
 
 
     @Test
-    public void requestIsSuccessfulAndCorrectViewIsReturned() throws Exception {
+    public void getIsSuccessfulAndCorrectViewIsReturned() throws Exception {
         mockMvc.perform(get(URL_TEMPLATE))
                 .andExpect(status().isOk())
                 .andExpect(view().name(VIEW_NAME));
@@ -74,7 +78,8 @@ public class WinnerTipControllerTest {
 
     @Test
     public void responseContainsAllWinnerTips() throws Exception {
-        verifyAttribute(WINNER_TIPS_ATTRIBUTE)
+        mockMvc.perform(get(URL_TEMPLATE))
+                .andExpect(model().attributeExists(WINNER_TIPS_ATTRIBUTE))
                 .andExpect(model().attribute(WINNER_TIPS_ATTRIBUTE, containsInAnyOrder(winnerTips.toArray())))
                 .andExpect(model().attribute(WINNER_TIPS_ATTRIBUTE, hasItem(
                             allOf(
@@ -91,18 +96,22 @@ public class WinnerTipControllerTest {
     }
 
     @Test
-    public void responseContainsAllSoccerTeams() throws Exception {
-        verifyAttribute(SOCCER_TEAM_ATTRIBUTE)
-                .andExpect(model().attribute(SOCCER_TEAM_ATTRIBUTE,containsInAnyOrder(soccerTeams.toArray())));
-
+    public void getEditIsSuccessfulAndCorrectViewIsReturned() throws Exception {
+        mockMvc.perform(get(URL_TEMPLATE_EDIT))
+                .andExpect(status().isOk())
+                .andExpect(view().name(EDIT_VIEW_NAME))
+                .andExpect(model().attribute(SOCCER_TEAMS_ATTRIBUTE,containsInAnyOrder(soccerTeams.toArray())))
+                .andExpect(model().attribute(APP_USER_ATTRIBUTE,is(USER_FIRST_NAME_1)))
+                .andExpect(model().attributeExists(WINNER_TIP_ATTRIBUTE));
         verify(winnerTipService,times(1)).getAllSoccerTeams();
     }
 
-    private ResultActions verifyAttribute(String winnerTips) throws Exception {
-        return mockMvc.perform(get(URL_TEMPLATE))
-                .andExpect(model().attributeExists(winnerTips));
+    @Test
+    public void postEditRedirects() throws Exception {
+        mockMvc.perform(post(URL_TEMPLATE_EDIT))
+                .andExpect(redirectedUrl(URL_TEMPLATE))
+                .andExpect(status().isFound());
     }
-
 
     private List<WinnerTipDTO> setupWinnertips() {
         WinnerTipDTO firstWinnertip = new WinnerTipDTO(USER_FIRST_NAME_1,FIFA_CODE_TEAM_1);
