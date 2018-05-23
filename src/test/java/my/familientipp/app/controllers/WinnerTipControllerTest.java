@@ -36,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class WinnerTipControllerTest {
 
     private static final String URL_TEMPLATE = "/siegertipp";
-    private static final String URL_TEMPLATE_EDIT = URL_TEMPLATE + "/edit/" + USER_FIRST_NAME_1;
+    private static final String URL_TEMPLATE_EDIT = URL_TEMPLATE + "/edit/" + FIRST_NAME_MAX;
     private static final String VIEW_NAME = "winnertip";
     private static final String EDIT_VIEW_NAME = "editWinnertip";
     private static final String WINNER_TIPS_ATTRIBUTE = "winnertips";
@@ -84,13 +84,13 @@ public class WinnerTipControllerTest {
                 .andExpect(model().attribute(WINNER_TIPS_ATTRIBUTE, containsInAnyOrder(winnerTips.toArray())))
                 .andExpect(model().attribute(WINNER_TIPS_ATTRIBUTE, hasItem(
                             allOf(
-                                    hasProperty(FIRST_NAME, is(USER_FIRST_NAME_1)),
-                                    hasProperty(FIFA_CODE, is(FIFA_CODE_TEAM_1))
+                                    hasProperty(FIRST_NAME, is(FIRST_NAME_MAX)),
+                                    hasProperty(FIFA_CODE, is(FIFA_CODE_RUSSLAND))
                             ))))
                 .andExpect(model().attribute(WINNER_TIPS_ATTRIBUTE, hasItem(
                             allOf(
-                                    hasProperty(FIRST_NAME, is(USER_FIRST_NAME_2)),
-                                    hasProperty(FIFA_CODE, is(FIFA_CODE_TEAM_2))
+                                    hasProperty(FIRST_NAME, is(FIRST_NAME_ANNA)),
+                                    hasProperty(FIFA_CODE, is(FIFA_CODE_DEUTSCHLAND))
                             ))));
 
         verify(winnerTipService,times(1)).getAllWinnertips();
@@ -102,7 +102,7 @@ public class WinnerTipControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name(EDIT_VIEW_NAME))
               //  .andExpect(model().attribute(SOCCER_TEAMS_ATTRIBUTE,containsInAnyOrder(soccerTeams.toArray())))
-                .andExpect(model().attribute(APP_USER_ATTRIBUTE,is(USER_FIRST_NAME_1)))
+                .andExpect(model().attribute(APP_USER_ATTRIBUTE,is(FIRST_NAME_MAX)))
                 .andExpect(model().attributeExists(WINNER_TIP_ATTRIBUTE));
         verify(winnerTipService,times(1)).getAllSoccerTeams();
     }
@@ -117,15 +117,15 @@ public class WinnerTipControllerTest {
     }
 
     private List<WinnerTipDTO> setupWinnertips() {
-        WinnerTipDTO firstWinnertip = new WinnerTipDTO(USER_FIRST_NAME_1,FIFA_CODE_TEAM_1);
-        WinnerTipDTO secondWinnertip = new WinnerTipDTO(USER_FIRST_NAME_2,FIFA_CODE_TEAM_2);
+        WinnerTipDTO firstWinnertip = new WinnerTipDTO(FIRST_NAME_MAX, FIFA_CODE_RUSSLAND);
+        WinnerTipDTO secondWinnertip = new WinnerTipDTO(FIRST_NAME_ANNA, FIFA_CODE_DEUTSCHLAND);
 
         return Arrays.asList(firstWinnertip, secondWinnertip);
     }
 
     private List<SoccerTeamDTO> setupSoccerTeams() {
-        SoccerTeamDTO soccerTeam1 = new SoccerTeamDTO(FIFA_CODE_TEAM_1, COUNTRY_TEAM_1);
-        SoccerTeamDTO soccerTeam2 = new SoccerTeamDTO(FIFA_CODE_TEAM_2, COUNTRY_TEAM_2);
+        SoccerTeamDTO soccerTeam1 = new SoccerTeamDTO(FIFA_CODE_RUSSLAND, COUNTRY_RUSSLAND);
+        SoccerTeamDTO soccerTeam2 = new SoccerTeamDTO(FIFA_CODE_DEUTSCHLAND, COUNTRY_DEUTSCHLAND);
 
         return Arrays.asList(soccerTeam1, soccerTeam2);
     }

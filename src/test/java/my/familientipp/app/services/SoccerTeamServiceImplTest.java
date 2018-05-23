@@ -45,8 +45,8 @@ public class SoccerTeamServiceImplTest {
     }
 
     private List<SoccerTeam> setupSoccerTeams() {
-        SoccerTeam soccerTeam1 = new SoccerTeam(FIFA_CODE_TEAM_1, COUNTRY_TEAM_1);
-        SoccerTeam soccerTeam2 = new SoccerTeam(FIFA_CODE_TEAM_2, COUNTRY_TEAM_2);
+        SoccerTeam soccerTeam1 = new SoccerTeam(FIFA_CODE_RUSSLAND, COUNTRY_RUSSLAND);
+        SoccerTeam soccerTeam2 = new SoccerTeam(FIFA_CODE_DEUTSCHLAND, COUNTRY_DEUTSCHLAND);
         return Arrays.asList(soccerTeam1, soccerTeam2);
     }
 }

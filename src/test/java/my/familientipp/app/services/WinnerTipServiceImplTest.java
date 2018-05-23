@@ -21,6 +21,7 @@ import java.util.Optional;
 import static my.familientipp.app.setup.TestConstants.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.samePropertyValuesAs;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.mockito.Mockito.*;
 
@@ -41,111 +42,111 @@ public class WinnerTipServiceImplTest {
 
     @Captor
     private ArgumentCaptor<AppUser> appUserCaptor;
-    private AppUser appUser2;
-    private AppUser appUser1;
-    private SoccerTeam soccerTeam1;
-    private SoccerTeam soccerTeam2;
+    private AppUser anna;
+    private AppUser max;
+    private AppUser bernd;
+    private SoccerTeam soccerTeamRUS;
+    private SoccerTeam soccerTeamGER;
 
     @Before
     public void setUp() {
         winnerTipService = new WinnerTipServiceImpl(appUserService, soccerTeamService);
 
-        appUsers = setupAppUsersWithWinnertips();
-        when(appUserService.findAll()).thenReturn(appUsers);
-
         allSoccerTeams = setupSoccerTeams();
         when(soccerTeamService.findAll()).thenReturn(allSoccerTeams);
+
+        setupAppUsers();
+        appUsers = Arrays.asList(max, anna);
+        when(appUserService.findAll()).thenReturn(appUsers);
     }
 
     @Test
-    public void correctDatainWinnertipDTOs() {
+    public void sortsWinnerTipsAlphabeticallyByFirstName() {
+        List<AppUser> unsortedAppUsers = Arrays.asList(bernd, max, anna);
+        when(appUserService.findAll()).thenReturn(unsortedAppUsers);
+
+        List<WinnerTipDTO> allWinnertips = winnerTipService.getAllWinnertips();
+
+        assertThat(allWinnertips.get(0).getFirstNameOfAppUser(),is(FIRST_NAME_ANNA));
+        assertThat(allWinnertips.get(1).getFirstNameOfAppUser(),is(FIRST_NAME_BERND));
+        assertThat(allWinnertips.get(2).getFirstNameOfAppUser(),is(FIRST_NAME_MAX));
+    }
+
+    @Test
+    public void containsCorrectDataInWinnertips() {
 
         List<WinnerTipDTO> winnerTips = winnerTipService.getAllWinnertips();
 
         assertThat(winnerTips, hasSize(appUsers.size()));
 
         WinnerTipDTO first = winnerTips.get(0);
-        assertThat(first.getFifaCodeOfSoccerTeam(),is(FIFA_CODE_TEAM_1));
-        assertThat(first.getFirstNameOfAppUser(),is(USER_FIRST_NAME_1));
+        assertThat(first,samePropertyValuesAs(new WinnerTipDTO(FIRST_NAME_ANNA,FIFA_CODE_DEUTSCHLAND)));
 
         WinnerTipDTO second = winnerTips.get(1);
-        assertThat(second.getFifaCodeOfSoccerTeam(),is(FIFA_CODE_TEAM_2));
-        assertThat(second.getFirstNameOfAppUser(),is(USER_FIRST_NAME_2));
-
+        assertThat(second,samePropertyValuesAs(new WinnerTipDTO(FIRST_NAME_MAX,FIFA_CODE_RUSSLAND)));
     }
 
     @Test
-    public void leerForMissingWinnertip() {
-        appUsers = setupAppUsersSecondWithoutWinnertip();
+    public void setsMessageForMissingWinnertip() {
+        anna.setWinnertip(null);
         when(appUserService.findAll()).thenReturn(appUsers);
 
         List<WinnerTipDTO> winnerTips = winnerTipService.getAllWinnertips();
-        assertThat(winnerTips.get(1).getFifaCodeOfSoccerTeam(),is("leer"));
+
+        assertThat(winnerTips.get(0).getFifaCodeOfSoccerTeam(),is("leer"));
     }
 
     @Test
-    public void correctDataInSoccerTeamDTOs() {
+    public void containsCorrectDataInSoccerTeams() {
         List<SoccerTeamDTO> result = winnerTipService.getAllSoccerTeams();
 
         assertThat(result,hasSize(allSoccerTeams.size()));
 
-        SoccerTeamDTO first = result.get(0);
-        assertThat(first.getFifaCode(),is(FIFA_CODE_TEAM_1));
-        assertThat(first.getCountry(),is(COUNTRY_TEAM_1));
+        SoccerTeamDTO firstTeam = result.get(0);
+        assertThat(firstTeam,samePropertyValuesAs(new SoccerTeamDTO(FIFA_CODE_RUSSLAND, COUNTRY_RUSSLAND)));
 
-        SoccerTeamDTO second = result.get(1);
-        assertThat(second.getFifaCode(),is(FIFA_CODE_TEAM_2));
-        assertThat(second.getCountry(),is(COUNTRY_TEAM_2));
+        SoccerTeamDTO secondTeam = result.get(1);
+        assertThat(secondTeam,samePropertyValuesAs(new SoccerTeamDTO(FIFA_CODE_DEUTSCHLAND, COUNTRY_DEUTSCHLAND)));
     }
 
     @Test
-    public void persistEditedWinnertip() {
-        WinnerTipDTO editedWinnertip = new WinnerTipDTO(USER_FIRST_NAME_1,FIFA_CODE_TEAM_2);
+    public void persistsEditedWinnertip() {
+        WinnerTipDTO editedWinnertip = new WinnerTipDTO(FIRST_NAME_MAX, FIFA_CODE_DEUTSCHLAND);
 
-        when(appUserService.findByFirstName(USER_FIRST_NAME_1)).thenReturn(appUser1);
-        when(soccerTeamService.findByFIFACode(FIFA_CODE_TEAM_2)).thenReturn(soccerTeam2);
+        when(appUserService.findByFirstName(FIRST_NAME_MAX)).thenReturn(max);
+        when(soccerTeamService.findByFIFACode(FIFA_CODE_DEUTSCHLAND)).thenReturn(soccerTeamGER);
 
         winnerTipService.persistEdited(editedWinnertip);
 
         verify(appUserService,times(1)).persist(appUserCaptor.capture());
-        assertThat(appUserCaptor.getValue().getFirstName(),is(USER_FIRST_NAME_1));
-        assertThat(appUserCaptor.getValue().getWinnertip(),is(Optional.of(soccerTeam2)));
+        assertThat(appUserCaptor.getValue().getFirstName(),is(FIRST_NAME_MAX));
+        assertThat(appUserCaptor.getValue().getWinnertip(),is(Optional.of(soccerTeamGER)));
     }
 
     private List<SoccerTeam> setupSoccerTeams() {
-        soccerTeam1 = new SoccerTeam(FIFA_CODE_TEAM_1, COUNTRY_TEAM_1);
-        soccerTeam2 = new SoccerTeam(FIFA_CODE_TEAM_2, COUNTRY_TEAM_2);
-        return Arrays.asList(soccerTeam1, soccerTeam2);
+        soccerTeamRUS = new SoccerTeam(FIFA_CODE_RUSSLAND, COUNTRY_RUSSLAND);
+        soccerTeamGER = new SoccerTeam(FIFA_CODE_DEUTSCHLAND, COUNTRY_DEUTSCHLAND);
+        return Arrays.asList(soccerTeamRUS, soccerTeamGER);
     }
 
-    private List<AppUser> setupAppUsersWithWinnertips() {
-        appUser1 = new AppUserBuilder()
-                .withFirstName(USER_FIRST_NAME_1)
-                .withLastName(USER_LAST_NAME_1)
-                .withWinnerTip(new SoccerTeam(FIFA_CODE_TEAM_1,COUNTRY_TEAM_1))
+    private void setupAppUsers() {
+        max = new AppUserBuilder()
+                .withFirstName(FIRST_NAME_MAX)
+                .withLastName(LAST_NAME_MUSTERMANN)
+                .withWinnerTip(soccerTeamRUS)
                 .build();
 
-        appUser2 = new AppUserBuilder()
-                .withFirstName(USER_FIRST_NAME_2)
-                .withLastName(USER_LAST_NAME_2)
-                .withWinnerTip(new SoccerTeam(FIFA_CODE_TEAM_2,COUNTRY_TEAM_2))
+        anna = new AppUserBuilder()
+                .withFirstName(FIRST_NAME_ANNA)
+                .withLastName(LAST_NAME_SCHMID)
+                .withWinnerTip(soccerTeamGER)
                 .build();
 
-        return Arrays.asList(appUser1, appUser2);
+        bernd = new AppUserBuilder()
+                .withFirstName(FIRST_NAME_BERND)
+                .withLastName(LAST_NAME_MEIER)
+                .withWinnerTip(soccerTeamRUS)
+                .build();
     }
 
-    private List<AppUser> setupAppUsersSecondWithoutWinnertip() {
-        appUser1 = new AppUserBuilder()
-                .withFirstName(USER_FIRST_NAME_1)
-                .withLastName(USER_LAST_NAME_1)
-                .withWinnerTip(new SoccerTeam(FIFA_CODE_TEAM_1,COUNTRY_TEAM_1))
-                .build();
-
-        appUser2 = new AppUserBuilder()
-                .withFirstName(USER_FIRST_NAME_2)
-                .withLastName(USER_LAST_NAME_2)
-                .build();
-
-        return Arrays.asList(appUser1, appUser2);
-    }
 }

@@ -36,12 +36,12 @@ public class AppUserServiceImplTest {
     public void setUp() {
         appUserService = new AppUserServiceImpl(appUserRepository);
         appUser1 = new AppUserBuilder()
-                    .withFirstName(USER_FIRST_NAME_1)
-                    .withLastName(USER_LAST_NAME_1)
+                    .withFirstName(FIRST_NAME_MAX)
+                    .withLastName(LAST_NAME_MUSTERMANN)
                     .build();
         appUser2 = new AppUserBuilder()
-                    .withFirstName(USER_FIRST_NAME_2)
-                    .withLastName(USER_LAST_NAME_2)
+                    .withFirstName(FIRST_NAME_ANNA)
+                    .withLastName(LAST_NAME_SCHMID)
                     .build();
     }
 
@@ -58,8 +58,8 @@ public class AppUserServiceImplTest {
     @Test
     public void returnsAppUserByFirstName() {
         when(appUserRepository.findByFirstName(anyString())).thenReturn(appUser1);
-        AppUser appUser = appUserService.findByFirstName(USER_FIRST_NAME_1);
-        assertThat(appUser.getFirstName(),is(USER_FIRST_NAME_1));
+        AppUser appUser = appUserService.findByFirstName(FIRST_NAME_MAX);
+        assertThat(appUser.getFirstName(),is(FIRST_NAME_MAX));
     }
 
     @Test
