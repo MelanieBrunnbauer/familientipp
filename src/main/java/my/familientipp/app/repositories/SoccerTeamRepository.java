@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface SoccerTeamRepository extends CrudRepository<SoccerTeam, Long> {
     List<SoccerTeam> findAll();
+
+    SoccerTeam findByFifaCode(String fifaCode);
 }

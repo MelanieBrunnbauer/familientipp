@@ -7,4 +7,6 @@ import java.util.List;
 public interface SoccerTeamService {
 
     List<SoccerTeam> findAll();
+
+    SoccerTeam findByFIFACode(String fifaCode);
 }

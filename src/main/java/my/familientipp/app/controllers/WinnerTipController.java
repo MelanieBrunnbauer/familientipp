@@ -34,7 +34,7 @@ public class WinnerTipController {
     @GetMapping("/siegertipp/edit/{appUser}")
     public String editWinnertip(Model model, @PathVariable("appUser") String appUserFirstName) {
         List<SoccerTeamDTO> allSoccerTeams = winnertipService.getAllSoccerTeams();
-        model.addAttribute("soccerTeams", allSoccerTeams);
+        model.addAttribute("soccerTeams", allSoccerTeams.stream().map(SoccerTeamDTO::getFifaCode).toArray());
         model.addAttribute("appUser", appUserFirstName);
         model.addAttribute("winnertip", new WinnerTipDTO(appUserFirstName));
         return "editWinnertip";
@@ -42,8 +42,7 @@ public class WinnerTipController {
 
     @PostMapping("/siegertipp/edit/{appUser}")
     public String submitWinnertip(@ModelAttribute("winnertip") WinnerTipDTO winnertip, @PathVariable("appUser") String appUserFirstName) {
-        System.out.println(winnertip.getFifaCodeOfSoccerTeam());
-        System.out.println(winnertip.getFirstNameOfAppUser());
+        winnertipService.persistEdited(winnertip);
         return "redirect:/siegertipp";
     }
 }

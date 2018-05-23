@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class WinnerTipServiceImpl implements WinnerTipService{
+public class WinnerTipServiceImpl implements WinnerTipService {
 
     @Autowired
     private AppUserService appUserService;
@@ -29,23 +29,34 @@ public class WinnerTipServiceImpl implements WinnerTipService{
 
         List<AppUser> appUsers = appUserService.findAll();
         appUsers.forEach(appUser -> winnerTipDTOS.add(
-                        new WinnerTipDTO(
-                                appUser.getFirstName(),
-                                appUser.getWinnertip().map(SoccerTeam::getFifaCode).orElse("leer"))
-                ));
+                new WinnerTipDTO(
+                        appUser.getFirstName(),
+                        appUser.getWinnertip().map(SoccerTeam::getFifaCode).orElse("leer"))
+        ));
+
         return winnerTipDTOS;
     }
-
 
     public List<SoccerTeamDTO> getAllSoccerTeams() {
         List<SoccerTeamDTO> soccerTeamDTOS = new ArrayList<>();
 
-        List<SoccerTeam> soccerTeams = soccerTeamService.findAll();
-        soccerTeams.forEach(team -> soccerTeamDTOS.add(
-                new SoccerTeamDTO(team.getFifaCode(),team.getCountry())
+        soccerTeamService.findAll().forEach(team -> soccerTeamDTOS.add(
+                new SoccerTeamDTO(team.getFifaCode(), team.getCountry())
         ));
 
         return soccerTeamDTOS;
+    }
+
+    public void persistEdited(WinnerTipDTO winnertip) {
+        String firstNameOfAppUser = winnertip.getFirstNameOfAppUser();
+        AppUser appUser = appUserService.findByFirstName(firstNameOfAppUser);
+
+        String fifaCode = winnertip.getFifaCodeOfSoccerTeam();
+        SoccerTeam soccerTeam = soccerTeamService.findByFIFACode(fifaCode);
+
+        appUser.setWinnertip(soccerTeam);
+
+        appUserService.persist(appUser);
     }
 
 }

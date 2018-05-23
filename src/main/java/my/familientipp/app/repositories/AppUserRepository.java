@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface AppUserRepository extends CrudRepository<AppUser, Long> {
     List<AppUser> findAll();
+
+    AppUser findByFirstName(String firstName);
 }

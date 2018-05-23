@@ -21,4 +21,13 @@ public class AppUserServiceImpl implements AppUserService {
         return repository.findAll();
     }
 
+    public AppUser findByFirstName(String firstNameOfAppUser) {
+        return repository.findByFirstName(firstNameOfAppUser);
+    }
+
+    public void persist(AppUser appUser) {
+        repository.save(appUser);
+    }
+
+
 }

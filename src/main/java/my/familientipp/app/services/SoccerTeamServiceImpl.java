@@ -20,4 +20,8 @@ class SoccerTeamServiceImpl implements SoccerTeamService{
     public List<SoccerTeam> findAll() {
         return repository.findAll();
     }
+
+    public SoccerTeam findByFIFACode(String fifaCode) {
+        return repository.findByFifaCode(fifaCode);
+    }
 }
