@@ -83,17 +83,17 @@ public class WinnerTipControllerTest {
                 .andExpect(model().attributeExists(WINNER_TIPS_ATTRIBUTE))
                 .andExpect(model().attribute(WINNER_TIPS_ATTRIBUTE, containsInAnyOrder(winnerTips.toArray())))
                 .andExpect(model().attribute(WINNER_TIPS_ATTRIBUTE, hasItem(
-                            allOf(
-                                    hasProperty(FIRST_NAME, is(FIRST_NAME_MAX)),
-                                    hasProperty(FIFA_CODE, is(FIFA_CODE_RUSSLAND))
-                            ))))
+                        allOf(
+                                hasProperty(FIRST_NAME, is(FIRST_NAME_MAX)),
+                                hasProperty(FIFA_CODE, is(FIFA_CODE_RUSSLAND))
+                        ))))
                 .andExpect(model().attribute(WINNER_TIPS_ATTRIBUTE, hasItem(
-                            allOf(
-                                    hasProperty(FIRST_NAME, is(FIRST_NAME_ANNA)),
-                                    hasProperty(FIFA_CODE, is(FIFA_CODE_DEUTSCHLAND))
-                            ))));
+                        allOf(
+                                hasProperty(FIRST_NAME, is(FIRST_NAME_ANNA)),
+                                hasProperty(FIFA_CODE, is(FIFA_CODE_DEUTSCHLAND))
+                        ))));
 
-        verify(winnerTipService,times(1)).getAllWinnertips();
+        verify(winnerTipService, times(1)).getAllWinnertips();
     }
 
     @Test
@@ -101,10 +101,10 @@ public class WinnerTipControllerTest {
         mockMvc.perform(get(URL_TEMPLATE_EDIT))
                 .andExpect(status().isOk())
                 .andExpect(view().name(EDIT_VIEW_NAME))
-              //  .andExpect(model().attribute(SOCCER_TEAMS_ATTRIBUTE,containsInAnyOrder(soccerTeams.toArray())))
-                .andExpect(model().attribute(APP_USER_ATTRIBUTE,is(FIRST_NAME_MAX)))
+                //  .andExpect(model().attribute(SOCCER_TEAMS_ATTRIBUTE,containsInAnyOrder(soccerTeams.toArray())))
+                .andExpect(model().attribute(APP_USER_ATTRIBUTE, is(FIRST_NAME_MAX)))
                 .andExpect(model().attributeExists(WINNER_TIP_ATTRIBUTE));
-        verify(winnerTipService,times(1)).getAllSoccerTeams();
+        verify(winnerTipService, times(1)).getAllSoccerTeams();
     }
 
     @Test
@@ -112,7 +112,7 @@ public class WinnerTipControllerTest {
         mockMvc.perform(post(URL_TEMPLATE_EDIT))
                 .andExpect(redirectedUrl(URL_TEMPLATE))
                 .andExpect(status().isFound());
-        verify(winnerTipService,times(1)).persistEdited(any(WinnerTipDTO.class));
+        verify(winnerTipService, times(1)).persistEdited(any(WinnerTipDTO.class));
 
     }
 

@@ -30,7 +30,7 @@ public class SoccerTeamServiceImplTest {
 
 
     @Before
-    public void setUp(){
+    public void setUp() {
         service = new SoccerTeamServiceImpl(repository);
 
         soccerTeams = setupSoccerTeams();

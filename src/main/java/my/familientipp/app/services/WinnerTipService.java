@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface WinnerTipService {
     List<WinnerTipDTO> getAllWinnertips();
+
     List<SoccerTeamDTO> getAllSoccerTeams();
+
     void persistEdited(WinnerTipDTO winnertip);
 }

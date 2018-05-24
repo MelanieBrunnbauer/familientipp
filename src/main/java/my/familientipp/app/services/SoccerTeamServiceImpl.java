@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-class SoccerTeamServiceImpl implements SoccerTeamService{
+class SoccerTeamServiceImpl implements SoccerTeamService {
 
     private SoccerTeamRepository repository;
 

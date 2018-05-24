@@ -67,9 +67,9 @@ public class WinnerTipServiceImplTest {
 
         List<WinnerTipDTO> allWinnertips = winnerTipService.getAllWinnertips();
 
-        assertThat(allWinnertips.get(0).getFirstNameOfAppUser(),is(FIRST_NAME_ANNA));
-        assertThat(allWinnertips.get(1).getFirstNameOfAppUser(),is(FIRST_NAME_BERND));
-        assertThat(allWinnertips.get(2).getFirstNameOfAppUser(),is(FIRST_NAME_MAX));
+        assertThat(allWinnertips.get(0).getFirstNameOfAppUser(), is(FIRST_NAME_ANNA));
+        assertThat(allWinnertips.get(1).getFirstNameOfAppUser(), is(FIRST_NAME_BERND));
+        assertThat(allWinnertips.get(2).getFirstNameOfAppUser(), is(FIRST_NAME_MAX));
     }
 
     @Test
@@ -80,10 +80,10 @@ public class WinnerTipServiceImplTest {
         assertThat(winnerTips, hasSize(appUsers.size()));
 
         WinnerTipDTO first = winnerTips.get(0);
-        assertThat(first,samePropertyValuesAs(new WinnerTipDTO(FIRST_NAME_ANNA,FIFA_CODE_DEUTSCHLAND)));
+        assertThat(first, samePropertyValuesAs(new WinnerTipDTO(FIRST_NAME_ANNA, FIFA_CODE_DEUTSCHLAND)));
 
         WinnerTipDTO second = winnerTips.get(1);
-        assertThat(second,samePropertyValuesAs(new WinnerTipDTO(FIRST_NAME_MAX,FIFA_CODE_RUSSLAND)));
+        assertThat(second, samePropertyValuesAs(new WinnerTipDTO(FIRST_NAME_MAX, FIFA_CODE_RUSSLAND)));
     }
 
     @Test
@@ -93,20 +93,20 @@ public class WinnerTipServiceImplTest {
 
         List<WinnerTipDTO> winnerTips = winnerTipService.getAllWinnertips();
 
-        assertThat(winnerTips.get(0).getFifaCodeOfSoccerTeam(),is("leer"));
+        assertThat(winnerTips.get(0).getFifaCodeOfSoccerTeam(), is("leer"));
     }
 
     @Test
     public void containsCorrectDataInSoccerTeams() {
         List<SoccerTeamDTO> result = winnerTipService.getAllSoccerTeams();
 
-        assertThat(result,hasSize(allSoccerTeams.size()));
+        assertThat(result, hasSize(allSoccerTeams.size()));
 
         SoccerTeamDTO firstTeam = result.get(0);
-        assertThat(firstTeam,samePropertyValuesAs(new SoccerTeamDTO(FIFA_CODE_RUSSLAND, COUNTRY_RUSSLAND)));
+        assertThat(firstTeam, samePropertyValuesAs(new SoccerTeamDTO(FIFA_CODE_RUSSLAND, COUNTRY_RUSSLAND)));
 
         SoccerTeamDTO secondTeam = result.get(1);
-        assertThat(secondTeam,samePropertyValuesAs(new SoccerTeamDTO(FIFA_CODE_DEUTSCHLAND, COUNTRY_DEUTSCHLAND)));
+        assertThat(secondTeam, samePropertyValuesAs(new SoccerTeamDTO(FIFA_CODE_DEUTSCHLAND, COUNTRY_DEUTSCHLAND)));
     }
 
     @Test
@@ -118,9 +118,9 @@ public class WinnerTipServiceImplTest {
 
         winnerTipService.persistEdited(editedWinnertip);
 
-        verify(appUserService,times(1)).persist(appUserCaptor.capture());
-        assertThat(appUserCaptor.getValue().getFirstName(),is(FIRST_NAME_MAX));
-        assertThat(appUserCaptor.getValue().getWinnertip(),is(Optional.of(soccerTeamGER)));
+        verify(appUserService, times(1)).persist(appUserCaptor.capture());
+        assertThat(appUserCaptor.getValue().getFirstName(), is(FIRST_NAME_MAX));
+        assertThat(appUserCaptor.getValue().getWinnertip(), is(Optional.of(soccerTeamGER)));
     }
 
     private List<SoccerTeam> setupSoccerTeams() {

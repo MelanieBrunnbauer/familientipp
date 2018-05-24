@@ -36,13 +36,13 @@ public class AppUserServiceImplTest {
     public void setUp() {
         appUserService = new AppUserServiceImpl(appUserRepository);
         appUser1 = new AppUserBuilder()
-                    .withFirstName(FIRST_NAME_MAX)
-                    .withLastName(LAST_NAME_MUSTERMANN)
-                    .build();
+                .withFirstName(FIRST_NAME_MAX)
+                .withLastName(LAST_NAME_MUSTERMANN)
+                .build();
         appUser2 = new AppUserBuilder()
-                    .withFirstName(FIRST_NAME_ANNA)
-                    .withLastName(LAST_NAME_SCHMID)
-                    .build();
+                .withFirstName(FIRST_NAME_ANNA)
+                .withLastName(LAST_NAME_SCHMID)
+                .build();
     }
 
     @Test
@@ -52,19 +52,19 @@ public class AppUserServiceImplTest {
         when(appUserRepository.findAll()).thenReturn(allAppUsers);
 
         List<AppUser> result = appUserService.findAll();
-        assertThat(result,containsInAnyOrder(allAppUsers.toArray()));
+        assertThat(result, containsInAnyOrder(allAppUsers.toArray()));
     }
 
     @Test
     public void returnsAppUserByFirstName() {
         when(appUserRepository.findByFirstName(anyString())).thenReturn(appUser1);
         AppUser appUser = appUserService.findByFirstName(FIRST_NAME_MAX);
-        assertThat(appUser.getFirstName(),is(FIRST_NAME_MAX));
+        assertThat(appUser.getFirstName(), is(FIRST_NAME_MAX));
     }
 
     @Test
     public void persistsAppUser() {
         appUserService.persist(appUser1);
-        verify(appUserRepository,times(1)).save(appUser1);
+        verify(appUserRepository, times(1)).save(appUser1);
     }
 }

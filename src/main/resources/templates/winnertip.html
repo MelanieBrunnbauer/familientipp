@@ -18,17 +18,17 @@
     </tr>
     </thead>
     <tbody>
-        <tr th:each="winnertip : ${winnertips}">
-            <td th:text="${winnertip.firstNameOfAppUser}"></td>
-            <td th:text="${winnertip.fifaCodeOfSoccerTeam}"></td>
-            <td>
-                <form method="get" th:action="@{|/siegertipp/edit/${winnertip.firstNameOfAppUser}|}">
-                    <button class="btn btn-default">
-                        <span class="glyphicon glyphicon-pencil"></span>
-                    </button>
-                </form>
-            </td>
-        </tr>
+    <tr th:each="winnertip : ${winnertips}">
+        <td th:text="${winnertip.firstNameOfAppUser}"></td>
+        <td th:text="${winnertip.fifaCodeOfSoccerTeam}"></td>
+        <td>
+            <form method="get" th:action="@{|/siegertipp/edit/${winnertip.firstNameOfAppUser}|}">
+                <button class="btn btn-default">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </button>
+            </form>
+        </td>
+    </tr>
     </tbody>
 </table>
 </body>
