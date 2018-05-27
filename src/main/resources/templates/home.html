@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -8,22 +8,25 @@
     <title>Welcome</title>
 </head>
 <body>
-
-<nav class="navbar navbar-inverse">
-    <div class="container">
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">Familienbande - Tippspiel zur WM 2018</a>
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navigation-items" aria-expanded="false">
+                <span class="glyphicon glyphicon-menu-hamburger"></span>
+            </button>
+            <a class="navbar-brand" href="#">Familienbande</a>
         </div>
-        <div id="navbar" class="collapse navbar-collapse">
+
+        <div class="collapse navbar-collapse" id="navigation-items">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li class="active"><a href="#">Weltmeister-Tipp</a></li>
-                <li class="active"><a href="#">Mannschaften</a></li>
-                <li class="active"><a href="#">Spielstätten</a></li>
+                <li><a th:href="@{/siegertipp}">Weltmeister-Tipp</a></li>
             </ul>
         </div>
+        <script src="webjars/jquery/1.9.1/jquery.min.js"></script>
+        <script src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </div>
 </nav>
+
 
 <h1>Servus!</h1>
 <p>Hier entsteht unsere neue Tipp-App für die WM 2018.</p>
