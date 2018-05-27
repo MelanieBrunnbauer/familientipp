@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css"
+          href="webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <title>Welcome</title>
+</head>
+<body>
+<div th:fragment="navigation">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#navigation-items" aria-expanded="false">
+                    <span class="glyphicon glyphicon-menu-hamburger"></span>
+                </button>
+                <a class="navbar-brand" href="#">Familienbande</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="navigation-items">
+                <ul class="nav navbar-nav">
+                    <li><a th:href="@{/}">Startseite</a></li>
+                    <li><a th:href="@{/siegertipp}">Weltmeister-Tipp</a></li>
+                </ul>
+            </div>
+            <script src="webjars/jquery/1.9.1/jquery.min.js"></script>
+            <script src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        </div>
+    </nav>
+</div>
+
+
+<h1>Servus!</h1>
+<p>Hier entsteht unsere neue Tipp-App für die WM 2018.</p>
+</body>
+</html>
