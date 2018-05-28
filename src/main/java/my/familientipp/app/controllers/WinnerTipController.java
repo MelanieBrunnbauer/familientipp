@@ -34,7 +34,7 @@ public class WinnerTipController {
     @GetMapping("/siegertipp/edit/{appUser}")
     public String editWinnertip(Model model, @PathVariable("appUser") String appUserFirstName) {
         List<SoccerTeamDTO> allSoccerTeams = winnertipService.getAllSoccerTeams();
-        model.addAttribute("soccerTeams", allSoccerTeams.stream().map(SoccerTeamDTO::getFifaCode).toArray());
+        model.addAttribute("soccerTeams", allSoccerTeams);
         model.addAttribute("appUser", appUserFirstName);
         model.addAttribute("winnertip", new WinnerTipDTO(appUserFirstName));
         return "editWinnertip";

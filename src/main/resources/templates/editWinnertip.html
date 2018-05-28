@@ -20,8 +20,8 @@
     <select th:field="*{fifaCodeOfSoccerTeam}" class="form-control">
         <option
                 th:each="soccerTeam : ${soccerTeams}"
-                th:text="${soccerTeam}"
-                th:value="${soccerTeam}">
+                th:text="${soccerTeam.country + ' (' + soccerTeam.fifaCode + ')'}"
+                th:value="${soccerTeam.fifaCode}">
         </option>
     </select>
     <input type="submit" value="Speichern"/>
