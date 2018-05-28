@@ -3,11 +3,6 @@ insert into soccer_team (fifa_code, country) values
 ('KSA', 'Saudi Arabien'),
 ('EGY', 'Ägypten');
 
-Insert into app_user (first_name, last_name, winnertip_id) values
-('Michael', 'Brunnbauer', 1),
-('Melanie', 'Brunnbauer', 2),
-('Anton', 'Brunnbauer', 3);
-
 Insert into app_user (first_name, last_name) values
 ('Ulla', 'Brunnbauer'),
 ('Matthias', 'Brunnbauer'),
@@ -15,4 +10,8 @@ Insert into app_user (first_name, last_name) values
 ('Julia', 'Brunnbauer'),
 ('Benedikt', 'Brunnbauer'),
 ('Isabella', 'Brandis'),
-('Susanne', 'Brunnbauer');
+('Susanne', 'Brunnbauer'),
+('Anabel','Brunnbauer'),
+('Michael', 'Brunnbauer'),
+('Melanie', 'Brunnbauer'),
+('Anton', 'Brunnbauer');

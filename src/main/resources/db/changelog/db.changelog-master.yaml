@@ -1,0 +1,67 @@
+databaseChangeLog:
+- changeSet:
+    id: 1527460454147-1
+    author: Melanie (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+              primaryKeyName: app_user_pkey
+            name: id
+            type: BIGSERIAL
+        - column:
+            constraints:
+              nullable: false
+            name: first_name
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: last_name
+            type: VARCHAR(255)
+        - column:
+            name: winnertip_id
+            type: BIGINT
+        tableName: app_user
+- changeSet:
+    id: 1527460454147-2
+    author: Melanie (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+              primaryKeyName: soccer_team_pkey
+            name: id
+            type: BIGSERIAL
+        - column:
+            constraints:
+              nullable: false
+            name: country
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: fifa_code
+            type: VARCHAR(255)
+        tableName: soccer_team
+- changeSet:
+    id: 1527460454147-3
+    author: Melanie (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: winnertip_id
+        baseTableName: app_user
+        constraintName: fkqer0ylio6t1sec9j5qww60okr
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: soccer_team
+        validate: true

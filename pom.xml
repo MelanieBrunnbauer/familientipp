@@ -59,6 +59,18 @@
         </dependency>
 
         <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+            <version>3.6.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-maven-plugin</artifactId>
+            <version>3.6.1</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>bootstrap</artifactId>
             <version>3.3.7</version>
