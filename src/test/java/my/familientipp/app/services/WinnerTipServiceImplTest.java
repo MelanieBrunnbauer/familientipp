@@ -73,6 +73,17 @@ public class WinnerTipServiceImplTest {
     }
 
     @Test
+    public void sortsSoccerTeamsAlphabeticallyByCountry() {
+        List<SoccerTeam> unsortedSoccerTeams = Arrays.asList(soccerTeamRUS, soccerTeamGER);
+        when(soccerTeamService.findAll()).thenReturn(unsortedSoccerTeams);
+
+        List<SoccerTeamDTO> sortedSoccerTeams = winnerTipService.getAllSoccerTeams();
+
+        assertThat(sortedSoccerTeams.get(0).getCountry(),is(COUNTRY_DEUTSCHLAND));
+        assertThat(sortedSoccerTeams.get(1).getCountry(),is(COUNTRY_RUSSLAND));
+    }
+
+    @Test
     public void containsCorrectDataInWinnertips() {
 
         List<WinnerTipDTO> winnerTips = winnerTipService.getAllWinnertips();
@@ -102,11 +113,11 @@ public class WinnerTipServiceImplTest {
 
         assertThat(result, hasSize(allSoccerTeams.size()));
 
-        SoccerTeamDTO firstTeam = result.get(0);
-        assertThat(firstTeam, samePropertyValuesAs(new SoccerTeamDTO(FIFA_CODE_RUSSLAND, COUNTRY_RUSSLAND)));
-
-        SoccerTeamDTO secondTeam = result.get(1);
+        SoccerTeamDTO secondTeam = result.get(0);
         assertThat(secondTeam, samePropertyValuesAs(new SoccerTeamDTO(FIFA_CODE_DEUTSCHLAND, COUNTRY_DEUTSCHLAND)));
+
+        SoccerTeamDTO firstTeam = result.get(1);
+        assertThat(firstTeam, samePropertyValuesAs(new SoccerTeamDTO(FIFA_CODE_RUSSLAND, COUNTRY_RUSSLAND)));
     }
 
     @Test
@@ -121,6 +132,11 @@ public class WinnerTipServiceImplTest {
         verify(appUserService, times(1)).persist(appUserCaptor.capture());
         assertThat(appUserCaptor.getValue().getFirstName(), is(FIRST_NAME_MAX));
         assertThat(appUserCaptor.getValue().getWinnertip(), is(Optional.of(soccerTeamGER)));
+    }
+
+    @Test
+    public void editingIsNotAllowedAfterStartTime() {
+
     }
 
     private List<SoccerTeam> setupSoccerTeams() {

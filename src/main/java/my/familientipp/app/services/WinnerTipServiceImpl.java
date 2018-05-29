@@ -46,6 +46,7 @@ public class WinnerTipServiceImpl implements WinnerTipService {
         soccerTeamService.findAll().forEach(team -> soccerTeamDTOS.add(
                 new SoccerTeamDTO(team.getFifaCode(), team.getCountry())
         ));
+        soccerTeamDTOS.sort(Comparator.comparing(SoccerTeamDTO::getCountry));
 
         return soccerTeamDTOS;
     }
