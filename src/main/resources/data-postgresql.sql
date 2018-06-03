@@ -44,3 +44,7 @@ Insert into app_user (first_name, last_name) values
 ('Michael', 'Brunnbauer'),
 ('Melanie', 'Brunnbauer'),
 ('Anton', 'Brunnbauer');
+
+set datestyle=dmy;
+Insert into game (kickoff, home_team_id, guest_team_id) values
+('14/06/2018 17:00',1,31);

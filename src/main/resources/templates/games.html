@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css"
+          href="webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <title>Spiele</title>
+</head>
+<body>
+<div th:include="header :: navigation"></div>
+<h1>Spiele</h1>
+
+<div class="list-group">
+    <a class="list-group-item" href="#" th:each="game : ${allGames}"
+       th:text="${game.home_team.country + ' - ' + game.guest_team.country
+       + ' am '
+       + #temporals.dayOfWeekNameShort(game.kickoff) + ', '
+       + #temporals.day(game.kickoff) + '.' + #temporals.month(game.kickoff)
+       + ' '
+       + #temporals.hour(game.kickoff) + ':' + #temporals.minute(game.kickoff)
+       }"></a>
+</div>
+</body>
+</html>

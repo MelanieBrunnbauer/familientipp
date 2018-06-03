@@ -65,3 +65,46 @@ databaseChangeLog:
         referencedColumnNames: id
         referencedTableName: soccer_team
         validate: true
+- changeSet:
+    id: 4
+    author: Melanie
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: id
+            type: BIGSERIAL
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+              primaryKeyName: game_pkey
+        - column:
+            name: kickoff
+            type: TIMESTAMP WITHOUT TIMEZONE
+            constraints:
+              nullable: false
+        - column:
+            name: home_team_id
+            type: BIGINT
+            constraints:
+                nullable: false
+        - column:
+            name: guest_team_id
+            type: BIGINT
+            constraints:
+                nullable: false
+        tableName: game
+    - addForeignKeyConstraint:
+        baseColumnNames: home_team_id
+        baseTableName: game
+        constraintName: foreignkey_opponent_home
+        referencedColumnNames: id
+        referencedTableName: soccer_team
+        validate: true
+    - addForeignKeyConstraint:
+        baseColumnNames: guest_team_id
+        baseTableName: game
+        constraintName: foreignkey_opponent_guest
+        referencedColumnNames: id
+        referencedTableName: soccer_team
+        validate: true
