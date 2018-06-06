@@ -32,18 +32,18 @@ insert into soccer_team (country, fifa_code) values
 ('Saudi Arabien','KSA'),
 ('Ägypten','EGY');
 
-Insert into app_user (first_name, last_name) values
-('Ulla', 'Brunnbauer'),
-('Matthias', 'Brunnbauer'),
-('Christian', 'Brunnbauer'),
-('Julia', 'Brunnbauer'),
-('Benedikt', 'Brunnbauer'),
-('Isabella', 'Brandis'),
-('Susanne', 'Brunnbauer'),
-('Anabel','Brunnbauer'),
-('Michael', 'Brunnbauer'),
-('Melanie', 'Brunnbauer'),
-('Anton', 'Brunnbauer');
+Insert into app_user (first_name, last_name, score) values
+('Ulla', 'Brunnbauer', 0),
+('Matthias', 'Brunnbauer', 0),
+('Christian', 'Brunnbauer', 0),
+('Julia', 'Brunnbauer', 0),
+('Benedikt', 'Brunnbauer', 0),
+('Isabella', 'Brandis', 0),
+('Susanne', 'Brunnbauer', 0),
+('Anabel','Brunnbauer', 0),
+('Michael', 'Brunnbauer', 0),
+('Melanie', 'Brunnbauer', 0),
+('Anton', 'Brunnbauer', 0);
 
 set datestyle=dmy;
 Insert into game (kickoff, home_team_id, guest_team_id) values

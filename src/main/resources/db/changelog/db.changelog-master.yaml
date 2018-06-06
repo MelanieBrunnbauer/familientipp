@@ -25,6 +25,9 @@ databaseChangeLog:
         - column:
             name: winnertip_id
             type: BIGINT
+        - column:
+            name: score
+            type: BIGINT
         tableName: app_user
 - changeSet:
     id: 1527460454147-2

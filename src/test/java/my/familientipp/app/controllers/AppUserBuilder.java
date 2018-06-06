@@ -8,6 +8,7 @@ public class AppUserBuilder {
     private String firstName = "";
     private String lastName = "";
     private SoccerTeam winnerTip;
+    private int score;
 
     public AppUserBuilder withFirstName(String firstName) {
         this.firstName = firstName;
@@ -24,7 +25,12 @@ public class AppUserBuilder {
         return this;
     }
 
+    public AppUserBuilder withScore(int score) {
+        this.score = score;
+        return this;
+    }
+
     public AppUser build() {
-        return new AppUser(firstName, lastName, winnerTip);
+        return new AppUser(firstName, lastName, winnerTip, score);
     }
 }

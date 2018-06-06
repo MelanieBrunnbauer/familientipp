@@ -17,16 +17,20 @@ public class AppUser {
     @NotNull
     private String lastName;
 
+    @NotNull
+    private int score;
+
     @ManyToOne()
     private SoccerTeam winnertip;
 
     public AppUser() {
     }
 
-    public AppUser(@NotNull String firstName, @NotNull String lastName, SoccerTeam winnertip) {
+    public AppUser(@NotNull String firstName, @NotNull String lastName, SoccerTeam winnertip, int score) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.winnertip = winnertip;
+        this.score = score;
     }
 
     public Long getId() {
