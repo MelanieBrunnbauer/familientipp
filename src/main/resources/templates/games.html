@@ -13,7 +13,7 @@
 <div class="list-group" th:each="game : ${allGames}">
     <button class="list-group-item" data-toggle="collapse" th:attr="data-target='#gametip_' + ${game.home_team.fifaCode} + '_' + ${game.guest_team.fifaCode}">
         <span th:text="${game.home_team.country + ' - ' + game.guest_team.country}"></span>
-        <span class="text-right" th:text="${' am '+ #temporals.format(game.kickoff, 'dd.MM., HH:mm')}"></span>
+        <span class="pull-right" th:text="${' am '+ #temporals.format(game.kickoff, 'dd.MM., HH:mm')}"></span>
     </button>
     <div th:id="gametip_ + ${game.home_team.fifaCode} + '_' + ${game.guest_team.fifaCode}" class="collapse">
         Tipps hier
