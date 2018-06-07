@@ -111,3 +111,40 @@ databaseChangeLog:
         referencedColumnNames: id
         referencedTableName: soccer_team
         validate: true
+- changeSet:
+    id: 5
+    author: Melanie
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: game_id
+            type: BIGINT
+        - column:
+            name: app_user_id
+            type: BIGINT
+        - column:
+            name: score_hometeam
+            type: BIGINT
+        - column:
+            name: score_guestteam
+            type: BIGINT
+        tableName: game_tipp
+    - addForeignKeyConstraint:
+        baseColumnNames: game_id
+        baseTableName: game_tipp
+        constraintName: foreignkey_game_gametipp
+        referencedColumnNames: id
+        referencedTableName: game
+        validate: true
+    - addForeignKeyConstraint:
+        baseColumnNames: app_user_id
+        baseTableName: game_tipp
+        constraintName: foreignkey_appuser_gametipp
+        referencedColumnNames: id
+        referencedTableName: app_user
+        validate: true
+    - addPrimaryKey:
+        columnNames: game_id, app_user_id
+        constraintName: pk_game_tipp
+        tableName: game_tipp

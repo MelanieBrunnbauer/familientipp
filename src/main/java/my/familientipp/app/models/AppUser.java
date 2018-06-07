@@ -2,9 +2,11 @@ package my.familientipp.app.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 import java.util.Optional;
 
 @Entity
+@Table(name="app_user")
 public class AppUser {
 
     @Id
@@ -20,8 +22,11 @@ public class AppUser {
     @NotNull
     private int score;
 
-    @ManyToOne()
+    @ManyToOne
     private SoccerTeam winnertip;
+
+    @OneToMany(mappedBy = "appUser")
+    private List<GameTipp> gamesTipped;
 
     public AppUser() {
     }
@@ -61,4 +66,11 @@ public class AppUser {
         this.winnertip = winnertip;
     }
 
+    List<GameTipp> getGamesTipped() {
+        return gamesTipped;
+    }
+
+    public void setGamesTipped(List<GameTipp> gamesTipped) {
+        this.gamesTipped = gamesTipped;
+    }
 }
