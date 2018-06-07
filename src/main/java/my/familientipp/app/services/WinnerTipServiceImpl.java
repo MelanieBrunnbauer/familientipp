@@ -32,7 +32,7 @@ public class WinnerTipServiceImpl implements WinnerTipService {
         appUsers.forEach(appUser -> winnerTipDTOS.add(
                 new WinnerTipDTO(
                         appUser.getFirstName(),
-                        appUser.getWinnertip().map(SoccerTeam::getFifaCode).orElse("leer"))
+                        appUser.getWinnertip().map(SoccerTeam::getFifaCode).orElse("bitte Tipp abgeben"))
         ));
 
         winnerTipDTOS.sort(Comparator.comparing(WinnerTipDTO::getFirstNameOfAppUser));

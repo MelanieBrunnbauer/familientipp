@@ -104,7 +104,7 @@ public class WinnerTipServiceImplTest {
 
         List<WinnerTipDTO> winnerTips = winnerTipService.getAllWinnertips();
 
-        assertThat(winnerTips.get(0).getFifaCodeOfSoccerTeam(), is("leer"));
+        assertThat(winnerTips.get(0).getFifaCodeOfSoccerTeam(), is("bitte Tipp abgeben"));
     }
 
     @Test
